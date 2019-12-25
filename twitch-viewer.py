@@ -120,7 +120,7 @@ def prepare_processes():
 # THis Section is for logging and checking view count
 def get_id_for_user(user):
     headers = {'Client-ID': clientid, 'Accept': "application/vnd.twitchtv.v5+json"}
-    url = "https://api.twitch.tv/kraken/users?login=" + user
+    url = "https://api.twitch.tv/helix/users?login=" + user
     r = requests.get(url, headers=headers)
     if r.status_code != 200:
         raise Exception("Could not get user ID calling URL {0} with headers {1} - HTTP {2} - {3}".format(url, headers, r.status_code, r.content))
@@ -129,32 +129,32 @@ def get_id_for_user(user):
     print("Found id:" + user_id)
     return user_id
 
-def get_viewers(clientid, user):
-    user_id = get_id_for_user(user)
-    url = "https://api.twitch.tv/helix/streams/"+user_id+"?client_id="+clientid
+#def get_viewers(clientid, user):
+#    user_id = get_id_for_user(user)
+ #   url = "https://api.twitch.tv/helix/streams/"+user_id+"?client_id="+clientid
     # print(url)
 
-    r = requests.get(url)
-    if r.status_code != 200:
-        raise Exception("API returned {0} : {1}".format(r.status_code, r.content))
-    infos = r.json()
-    stream = infos['stream']
-    results = {}
-    stream_results = {}
-    if not stream:
-        results = {'online':False,'title':None,'viewers':0}
-        stream_results['Status'] = "Offline"
-        stream_results['Viewers'] = 0
-    else:
-        viewers = stream['viewers']
-        title = stream['channel']['status']
-        stream_results['Status'] = "Online"
-        stream_results['Viewers'] = viewers
-        results = {'online':True,'title':title,'viewers':viewers}
+  #  r = requests.get(url)
+   # if r.status_code != 200:
+    #    raise Exception("API returned {0} : {1}".format(r.status_code, r.content))
+   # infos = r.json()
+#    stream = infos['stream']
+ #   results = {}
+  #  stream_results = {}
+   # if not stream:
+    #    results = {'online':False,'title':None,'viewers':0}
+     #   stream_results['Status'] = "Offline"
+      #  stream_results['Viewers'] = 0
+#    else:
+ #       viewers = stream['viewers']
+  #      title = stream['channel']['status']
+   #     stream_results['Status'] = "Online"
+    #    stream_results['Viewers'] = viewers
+     #   results = {'online':True,'title':title,'viewers':viewers}
 
-    results['time'] = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
-    results['stream'] = user
-    return stream_results
+#    results['time'] = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
+ #   results['stream'] = user
+  #  return stream_results
 # End Logging
 
 if __name__ == "__main__":

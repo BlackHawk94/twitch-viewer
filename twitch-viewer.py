@@ -131,7 +131,7 @@ def get_id_for_user(user):
 
 def get_viewers(clientid, user):
     user_id = get_id_for_user(user)
-    url = "https://api.twitch.tv/kraken/streams/"+user_id+"?client_id="+clientid
+    url = "https://api.twitch.tv/helix/streams/"+user_id+"?client_id="+clientid
     # print(url)
 
     r = requests.get(url)
